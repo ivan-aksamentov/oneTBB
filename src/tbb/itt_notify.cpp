@@ -24,7 +24,7 @@
     #pragma weak dlopen
     #pragma weak dlsym
     #pragma weak dlerror
-#endif /* WIN */
+#endif /* (_WIN32||_WIN64) && !__MINGW32__ */
 
 #if __TBB_BUILD
 

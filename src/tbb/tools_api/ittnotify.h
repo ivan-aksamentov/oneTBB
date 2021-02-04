@@ -22,7 +22,7 @@
 @brief Public User API functions and types
 @mainpage
 
-The Instrumentation and Tracing Technology API (ITT API) is used to 
+The Instrumentation and Tracing Technology API (ITT API) is used to
 annotate a user's program with additional information
 that can be used by correctness and performance tools. The user inserts
 calls in their program. Those calls generate information that is collected
@@ -102,7 +102,7 @@ The same ID may not be reused for different instances, unless a previous
 #endif /* ITT_OS_FREEBSD */
 
 #ifndef ITT_OS
-#  if defined WIN32 || defined _WIN32
+#  if (defined WIN32 || defined _WIN32) && !defined __MINGW32__
 #    define ITT_OS ITT_OS_WIN
 #  elif defined( __APPLE__ ) && defined( __MACH__ )
 #    define ITT_OS ITT_OS_MAC

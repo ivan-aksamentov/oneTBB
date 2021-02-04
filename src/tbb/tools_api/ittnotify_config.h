@@ -35,7 +35,7 @@
 #endif /* ITT_OS_FREEBSD */
 
 #ifndef ITT_OS
-#  if defined WIN32 || defined _WIN32
+#  if (defined WIN32 || defined _WIN32) && !defined __MINGW32__
 #    define ITT_OS ITT_OS_WIN
 #  elif defined( __APPLE__ ) && defined( __MACH__ )
 #    define ITT_OS ITT_OS_MAC
@@ -210,7 +210,9 @@ typedef CRITICAL_SECTION  mutex_t;
 #define MUTEX_INITIALIZER { 0 }
 #define strong_alias(name, aliasname) /* empty for Windows */
 #else  /* ITT_PLATFORM==ITT_PLATFORM_WIN */
+#ifndef __MINGW32__
 #include <dlfcn.h>
+#endif
 #if defined(UNICODE) || defined(_UNICODE)
 #include <wchar.h>
 #endif /* UNICODE */

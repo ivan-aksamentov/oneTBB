@@ -25,9 +25,9 @@
 
 #include <cstdlib>
 
-#if _WIN32 || _WIN64
+#if (_WIN32 || _WIN64) && !__MINGW32__
 #include <Windows.h>
-#else
+#elif !(_WIN32 || _WIN64)
 #include <dlfcn.h>
 #endif /* _WIN32||_WIN64 */
 

@@ -118,13 +118,13 @@ public:
     }
 };
 
-#if _WIN32 || _WIN64
+#if (_WIN32 || _WIN64) && !__MINGW32__
 /* [[noreturn]] */ void __stdcall co_local_wait_for_all(void* arg) noexcept;
 #else
 /* [[noreturn]] */ void co_local_wait_for_all(void* arg) noexcept;
 #endif
 
-#if _WIN32 || _WIN64
+#if (_WIN32 || _WIN64) && !__MINGW32__
 inline void create_coroutine(coroutine_type& c, std::size_t stack_size, void* arg) {
     __TBB_ASSERT(arg, NULL);
     c = CreateFiber(stack_size, co_local_wait_for_all, arg);

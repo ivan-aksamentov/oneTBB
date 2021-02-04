@@ -32,7 +32,7 @@
 #if __TBB_x86_64 || __TBB_x86_32
 #include <immintrin.h> // _mm_pause
 #endif
-#if (_WIN32 || _WIN64)
+#if (_WIN32 || _WIN64) && !__MINGW32__
 #include <float.h> // _control87
 #endif
 
@@ -63,12 +63,12 @@ using std::this_thread::yield;
 // atomic_fence implementation
 //--------------------------------------------------------------------------------------------------
 
-#if (_WIN32 || _WIN64)
+#if (_WIN32 || _WIN64) && !__MINGW32__
 #pragma intrinsic(_mm_mfence)
 #endif
 
 static inline void atomic_fence(std::memory_order order) {
-#if (_WIN32 || _WIN64)
+#if (_WIN32 || _WIN64) && !__MINGW32__
     if (order == std::memory_order_seq_cst ||
         order == std::memory_order_acq_rel ||
         order == std::memory_order_acquire ||
@@ -229,7 +229,7 @@ T machine_reverse_bits(T src) {
 
 namespace d1 {
 
-#if (_WIN32 || _WIN64)
+#if (_WIN32 || _WIN64) && !__MINGW32__
 // API to retrieve/update FPU control setting
 #define __TBB_CPU_CTL_ENV_PRESENT 1
 struct cpu_ctl_env {

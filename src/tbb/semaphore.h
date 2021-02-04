@@ -19,7 +19,7 @@
 
 #include "oneapi/tbb/detail/_utils.h"
 
-#if _WIN32||_WIN64
+#if (_WIN32||_WIN64) && !__MINGW32__
 #include <windows.h>
 #elif __APPLE__
 #include <mach/semaphore.h>
@@ -124,7 +124,7 @@ static inline int futex_wakeup_one( void *futex ) {
 #endif // __TBB_USE_FUTEX
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-#if _WIN32||_WIN64
+#if _MSC_VER && (_WIN32 || _WIN64)
 typedef LONG sem_count_t;
 //! Edsger Dijkstra's counting semaphore
 class semaphore : no_copy {
@@ -203,7 +203,7 @@ private:
 
 
 //! for performance reasons, we want specialized binary_semaphore
-#if _WIN32||_WIN64
+#if _MSC_VER && (_WIN32 || _WIN64)
 #if !__TBB_USE_SRWLOCK
 //! binary_semaphore for concurrent_monitor
 class binary_semaphore : no_copy {
@@ -326,7 +326,7 @@ private:
     sem_t my_sem;
 };
 #endif /* __TBB_USE_FUTEX */
-#endif /* _WIN32||_WIN64 */
+#endif /* _MSC_VER && (_WIN32 || _WIN64) */
 
 } // namespace r1
 } // namespace detail

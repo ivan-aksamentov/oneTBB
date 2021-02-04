@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-add_library(tbbmalloc 
+add_library(tbbmalloc
     backend.cpp
     backref.cpp
     frontend.cpp
@@ -31,7 +31,7 @@ target_compile_definitions(tbbmalloc
 if (NOT ("${CMAKE_SYSTEM_PROCESSOR}" MATCHES "(armv7-a|aarch64|mips|arm64)" OR
          "${CMAKE_OSX_ARCHITECTURES}" MATCHES "arm64" OR
          WINDOWS_STORE OR
-         TBB_WINDOWS_DRIVER))
+         TBB_WINDOWS_DRIVER OR MINGW))
     target_compile_definitions(tbbmalloc PRIVATE __TBB_USE_ITT_NOTIFY)
 endif()
 

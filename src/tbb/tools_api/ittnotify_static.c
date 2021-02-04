@@ -20,8 +20,12 @@
 #define PATH_MAX 512
 #else /* ITT_PLATFORM!=ITT_PLATFORM_WIN */
 #include <limits.h>
-#include <dlfcn.h>
 #include <errno.h>
+
+#ifndef __MINGW32__
+#include <dlfcn.h>
+#endif
+
 #endif /* ITT_PLATFORM==ITT_PLATFORM_WIN */
 #include <stdio.h>
 #include <stdlib.h>
@@ -498,7 +502,7 @@ static __itt_counter ITTAPI ITT_VERSIONIZE(ITT_JOIN(_N_(counter_create),_init))(
     }
     for (h_tail = NULL, h = _N_(_ittapi_global).counter_list; h != NULL; h_tail = h, h = h->next)
     {
-        if (h->nameA != NULL  && h->type == type && !__itt_fstrcmp(h->nameA, name) && ((h->domainA == NULL && domain == NULL) || 
+        if (h->nameA != NULL  && h->type == type && !__itt_fstrcmp(h->nameA, name) && ((h->domainA == NULL && domain == NULL) ||
             (h->domainA != NULL && domain != NULL && !__itt_fstrcmp(h->domainA, domain)))) break;
     }
     if (h == NULL)
@@ -573,7 +577,7 @@ static __itt_counter ITTAPI ITT_VERSIONIZE(ITT_JOIN(_N_(counter_create_typed),_i
     }
     for (h_tail = NULL, h = _N_(_ittapi_global).counter_list; h != NULL; h_tail = h, h = h->next)
     {
-        if (h->nameA != NULL  && h->type == type && !__itt_fstrcmp(h->nameA, name) && ((h->domainA == NULL && domain == NULL) || 
+        if (h->nameA != NULL  && h->type == type && !__itt_fstrcmp(h->nameA, name) && ((h->domainA == NULL && domain == NULL) ||
             (h->domainA != NULL && domain != NULL && !__itt_fstrcmp(h->domainA, domain)))) break;
     }
     if (h == NULL)

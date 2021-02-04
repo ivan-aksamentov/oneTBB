@@ -338,7 +338,7 @@ void operator delete[](void* ptr, const std::nothrow_t&) noexcept {
 #endif /* MALLOC_UNIXLIKE_OVERLOAD_ENABLED */
 #endif /* MALLOC_UNIXLIKE_OVERLOAD_ENABLED || MALLOC_ZONE_OVERLOAD_ENABLED */
 
-#ifdef _WIN32
+#if defined _WIN32 || defined _WIN64 && !defined __MINGW32__
 #include <windows.h>
 
 #if !__TBB_WIN8UI_SUPPORT

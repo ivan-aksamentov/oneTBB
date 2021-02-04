@@ -30,7 +30,7 @@
 
 #include <cstddef>
 #if _WIN32
-#include <Windows.h>
+#include <windows.h>
 #endif /* _WIN32 */
 
 namespace tbb {
