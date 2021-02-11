@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include(GNUInstallDirs)
+
 macro(tbb_remove_compile_flag flag)
     get_property(_tbb_compile_options DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY COMPILE_OPTIONS)
     list(REMOVE_ITEM _tbb_compile_options ${flag})
@@ -23,22 +25,32 @@ macro(tbb_remove_compile_flag flag)
 endmacro()
 
 macro(tbb_install_target target)
-    install(TARGETS ${target}
-        EXPORT TBBTargets
-        LIBRARY
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            NAMELINK_SKIP
-            COMPONENT runtime
-        RUNTIME
-            DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT runtime
-        ARCHIVE
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT devel)
+    if(WIN32)
+        install(TARGETS ${target}
+            EXPORT TBBTargets
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+    else()
+        install(TARGETS ${target}
+            EXPORT TBBTargets
+            LIBRARY
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                NAMELINK_SKIP
+                COMPONENT runtime
+            RUNTIME
+                DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT runtime
+            ARCHIVE
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT devel)
 
-    install(TARGETS ${target}
-        LIBRARY
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            NAMELINK_ONLY
-            COMPONENT devel)
+        install(TARGETS ${target}
+            LIBRARY
+                DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                NAMELINK_ONLY
+                COMPONENT devel)
+    endif()
+
 endmacro()
